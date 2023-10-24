@@ -1,8 +1,111 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import style from './Pattern.module.css';
+import Stitch from '../../Stitch/components/Stitch';
 
 const Pattern = (props) => {
+
+//   test data
+const startingBackstitches = [
+    {
+        starting: {x: 1, y: 3},
+        ending: {x: 2, y: 1}
+    },
+    {
+        starting: {x: 2, y: 1},
+        ending: {x: 3, y: 1}
+    },
+    {
+        starting: {x: 3, y: 1},
+        ending: {x: 5, y: 3}
+    },
+    {
+        starting: {x: 5, y: 3},
+        ending: {x: 7, y: 1}
+    },
+    {
+        starting: {x: 7, y: 1},
+        ending: {x: 8, y: 1}
+    },
+    {
+        starting: {x: 8, y: 1},
+        ending: {x: 9, y: 3}
+    },
+    {
+        starting: {x: 9, y: 3},
+        ending: {x: 9, y: 5}
+    },
+    {
+        starting: {x: 9, y: 5},
+        ending: {x: 5, y: 9}
+    },
+    {
+        starting: {x: 5, y: 9},
+        ending: {x: 1, y: 5}
+    },
+    {
+        starting: {x: 1, y: 5},
+        ending: {x: 1, y: 3}
+    }
+]
+
+const other_triangles = [
+    [5, 2],
+    [6, 2],
+    [2, 7],
+    [2, 8],
+    [2, 9],
+    [3, 8],
+    [3, 9],
+    [4, 9],
+    [7, 9],
+    [8, 9],
+    [9, 9],
+    [9, 8],
+    [8, 8],
+    [9, 7]
+  ]
+
+  const startingCircles = [
+    [3, 2],
+    [3, 3],
+    [3, 4],
+    [4, 3],
+    [2, 4],
+    [2, 5],
+    [3, 5],
+    [3, 6],
+    [4, 4],
+    [5, 4],
+    [4, 5],
+    [5, 5],
+    [4, 6],
+    [5, 6],
+    [4, 7],
+    [5, 7],
+    [5, 8],
+    [6, 8],
+    [6, 7],
+    [7, 7],
+    [6, 6],
+    [7, 6],
+    [8, 6],
+    [6, 5],
+    [7, 5],
+    [8, 5],
+    [9, 5],
+    [6, 4],
+    [7, 4],
+    [8, 4],
+    [9, 4],
+    [7, 3],
+    [8, 3],
+    [8, 2],
+    [2, 3, 3],
+    [4, 2, 4]
+  ]
+
+
   const [
     sectionsWide,
     setSectionsWide
@@ -12,55 +115,34 @@ const Pattern = (props) => {
   const width = sectionsWide * unitWidth * 10;
   const height = sectionsHigh * unitWidth * 10;
   const tenUnit = unitWidth * 10;
-  const startingBackstitches = [
-        {
-            starting: {x: 1, y: 3},
-            ending: {x: 2, y: 1}
-        },
-        {
-            starting: {x: 2, y: 1},
-            ending: {x: 3, y: 1}
-        },
-        {
-            starting: {x: 3, y: 1},
-            ending: {x: 5, y: 3}
-        },
-        {
-            starting: {x: 5, y: 3},
-            ending: {x: 7, y: 1}
-        },
-        {
-            starting: {x: 7, y: 1},
-            ending: {x: 8, y: 1}
-        },
-        {
-            starting: {x: 8, y: 1},
-            ending: {x: 9, y: 3}
-        },
-        {
-            starting: {x: 9, y: 3},
-            ending: {x: 9, y: 5}
-        },
-        {
-            starting: {x: 9, y: 5},
-            ending: {x: 5, y: 9}
-        },
-        {
-            starting: {x: 5, y: 9},
-            ending: {x: 1, y: 5}
-        },
-        {
-            starting: {x: 1, y: 5},
-            ending: {x: 1, y: 3}
-        }
-    ]
-
   const backstitches = []
+  const stitches = []
+
   for (let i = 0; i < startingBackstitches.length; i++) {
     backstitches.push(
         <line x1={startingBackstitches[i].starting.x * unitWidth} y1={startingBackstitches[i].starting.y * unitWidth}
             x2={startingBackstitches[i].ending.x * unitWidth} y2={startingBackstitches[i].ending.y * unitWidth} stroke-width="0.5" stroke="black"/>
     )
+  }
+
+  function addStitch (shape, coords, fill="none") {
+    const quadrant = coords[2] ? coords[2] : 0;
+    return (<Stitch shape={shape} fill={fill} unitWidth={unitWidth} xVal={coords[0]} yVal={coords[1]} quadrant={quadrant}></Stitch>)
+  }
+
+  for (let i = 1; i < 11; i++) {
+    stitches.push(addStitch('triangle', [i, 1]))
+    stitches.push(addStitch('triangle', [1, i]))
+    stitches.push(addStitch('triangle', [10, i]))
+    stitches.push(addStitch('triangle', [i, 10]))
+  }
+
+  for (let i = 0; i < other_triangles.length; i++) {
+    stitches.push(addStitch('triangle', other_triangles[i]))
+  }
+
+  for (let i=0; i < startingCircles.length; i++) {
+    stitches.push(addStitch('circle', startingCircles[i]))
   }
 
   return (
@@ -89,6 +171,16 @@ const Pattern = (props) => {
             </pattern>
         </defs>
         {backstitches}
+        {stitches}
+        {/* <Stitch shape="circle" fill="none" xVal="1" yVal="1" unitWidth={unitWidth}></Stitch>
+        <Stitch shape="circle" fill="true" xVal="2" yVal="1" unitWidth={unitWidth}></Stitch>
+        <Stitch shape="triangle" fill="none" xVal="5" yVal="5" unitWidth={unitWidth}></Stitch>
+        <Stitch shape="triangle" fill="true" xVal="6" yVal="5" unitWidth={unitWidth}></Stitch>
+        <Stitch shape="flippedTriangle" fill="true" xVal="6" yVal="6" unitWidth={unitWidth}></Stitch>
+        <Stitch shape="flippedTriangle" fill="none" xVal="5" yVal="6" unitWidth={unitWidth}></Stitch>
+        <Stitch shape="x" xVal="4" yVal="1" unitWidth={unitWidth}></Stitch>
+        <Stitch shape="square" xVal="5" yVal="1" unitWidth={unitWidth} fill="none"></Stitch>
+        <Stitch shape="square" xVal="6" yVal="1" unitWidth={unitWidth} fill="true"></Stitch> */}
         <rect width="100%" height="100%" fill="url(#grid)" />
         </svg>
     </div>
