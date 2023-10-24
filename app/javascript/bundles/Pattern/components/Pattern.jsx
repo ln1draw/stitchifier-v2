@@ -12,6 +12,56 @@ const Pattern = (props) => {
   const width = sectionsWide * unitWidth * 10;
   const height = sectionsHigh * unitWidth * 10;
   const tenUnit = unitWidth * 10;
+  const startingBackstitches = [
+        {
+            starting: {x: 1, y: 3},
+            ending: {x: 2, y: 1}
+        },
+        {
+            starting: {x: 2, y: 1},
+            ending: {x: 3, y: 1}
+        },
+        {
+            starting: {x: 3, y: 1},
+            ending: {x: 5, y: 3}
+        },
+        {
+            starting: {x: 5, y: 3},
+            ending: {x: 7, y: 1}
+        },
+        {
+            starting: {x: 7, y: 1},
+            ending: {x: 8, y: 1}
+        },
+        {
+            starting: {x: 8, y: 1},
+            ending: {x: 9, y: 3}
+        },
+        {
+            starting: {x: 9, y: 3},
+            ending: {x: 9, y: 5}
+        },
+        {
+            starting: {x: 9, y: 5},
+            ending: {x: 5, y: 9}
+        },
+        {
+            starting: {x: 5, y: 9},
+            ending: {x: 1, y: 5}
+        },
+        {
+            starting: {x: 1, y: 5},
+            ending: {x: 1, y: 3}
+        }
+    ]
+
+  const backstitches = []
+  for (let i = 0; i < startingBackstitches.length; i++) {
+    backstitches.push(
+        <line x1={startingBackstitches[i].starting.x * unitWidth} y1={startingBackstitches[i].starting.y * unitWidth}
+            x2={startingBackstitches[i].ending.x * unitWidth} y2={startingBackstitches[i].ending.y * unitWidth} stroke-width="0.5" stroke="black"/>
+    )
+  }
 
   return (
     <div>
@@ -38,7 +88,7 @@ const Pattern = (props) => {
             <path d={"M " + tenUnit + " 0 L 0 0 0 " + tenUnit} fill="none" stroke="gray" stroke-width="1"/>
             </pattern>
         </defs>
-            
+        {backstitches}
         <rect width="100%" height="100%" fill="url(#grid)" />
         </svg>
     </div>
