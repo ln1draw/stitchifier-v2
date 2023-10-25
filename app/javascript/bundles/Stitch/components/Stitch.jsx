@@ -9,6 +9,7 @@ const Stitch = (props) => {
   const fill = props.fill == "none" ? 'none' : 'black'
   let unitWidth = props.unitWidth;
   let halfUnit = unitWidth / 2;
+  let thirdUnit = unitWidth / 3;
   let fifthUnit = unitWidth / 5;
   let fourFifthUnit = fifthUnit * 4;
   let xUnit = xVal * unitWidth;
@@ -16,6 +17,7 @@ const Stitch = (props) => {
 
   function setUnits() {
     halfUnit = unitWidth / 2;
+    thirdUnit = unitWidth / 3;
     fifthUnit = unitWidth / 5;
     fourFifthUnit = fifthUnit * 4;
   }
@@ -23,12 +25,18 @@ const Stitch = (props) => {
   let ret = '';
 
   if (quadrant > 0) {
+    console.log('unitwidth pre', unitWidth)
+    console.log('thirdunit pre', thirdUnit);
     unitWidth = unitWidth / 2
     setUnits();
-    if (quadrant == 4) {
-        console.log('in the if')
-        xVal = xVal - unitWidth / 2
-        console.log(xVal)
+    console.log('unitwidth post', unitWidth)
+    console.log('thirdwidth post', thirdUnit)
+    if (quadrant == 1 || quadrant == 4) {
+        xUnit = xUnit - 4 * fifthUnit;
+    } 
+    
+    if (quadrant == 1 || quadrant == 2) {
+        yUnit = yUnit - 4 * fifthUnit
     }
   }
 
