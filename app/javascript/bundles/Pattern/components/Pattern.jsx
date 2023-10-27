@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import style from './Pattern.module.css';
 import Stitch from '../../Stitch/components/Stitch';
+import Instruction from '../../Instruction/components/Instruction';
 
 const Pattern = (props) => {
 
@@ -136,8 +137,10 @@ const other_triangles = [
     sectionsWide,
     setSectionsWide
   ] = useState(props.sectionsWide);
-  const [sectionsHigh, setSectionsHigh] = useState(props.sectionsHigh)
-  const [unitWidth, setUnitWidth] = useState(props.unitWidth)
+  const [sectionsHigh, setSectionsHigh] = useState(props.sectionsHigh);
+  const [backstitchInstructions, setBackstitchInstructions] = useState(props.backstitchInstructions);
+  const [triangleInstructions, setTriangleInstructions] = useState(props.triangleInstructions);
+  const [unitWidth, setUnitWidth] = useState(props.unitWidth);
   const width = sectionsWide * unitWidth * 10;
   const height = sectionsHigh * unitWidth * 10;
   const tenUnit = unitWidth * 10;
@@ -147,7 +150,7 @@ const other_triangles = [
   for (let i = 0; i < startingBackstitches.length; i++) {
     backstitches.push(
         <line x1={startingBackstitches[i].starting.x * unitWidth} y1={startingBackstitches[i].starting.y * unitWidth}
-            x2={startingBackstitches[i].ending.x * unitWidth} y2={startingBackstitches[i].ending.y * unitWidth} stroke-width="0.5" stroke="black"/>
+            x2={startingBackstitches[i].ending.x * unitWidth} y2={startingBackstitches[i].ending.y * unitWidth} stroke-width="2" stroke="black"/>
     )
   }
 
@@ -172,17 +175,23 @@ const other_triangles = [
   }
 
   return (
-    <div>
-      <h3>Hello, {sectionsHigh}! this is a pattern!</h3>
-      <hr />
+    <div class="stitchifier">
       <form>
+        <label className={style.bright} htmlFor="triangleInstructions">
+          What should be triangles?
+          <input id="triangleInstructions" type="text" value={triangleInstructions} onChange={(e) => setTriangleInstructions(e.target.value)} />
+        </label>
+        <label className={style.bright} htmlFor="backstitchInstructions">
+          What should be backstitched?
+          <input id="backstitchInstructions" type="text" value={backstitchInstructions} onChange={(e) => setBackstitchInstructions(e.target.value)} />
+        </label>
         <label className={style.bright} htmlFor="sectionsWide">
-          how many sections wide:
+          How many sections wide?
           <input id="sectionsWide" type="text" value={sectionsWide} onChange={(e) => setSectionsWide(e.target.value)} />
         </label>
 
         <label className={style.bright} htmlFor="sectionsHigh">
-          how many sections High:
+          How many sections high?
           <input id="sectionsHigh" type="text" value={sectionsHigh} onChange={(e) => setSectionsHigh(e.target.value)} />
         </label>
       </form>

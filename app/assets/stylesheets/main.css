@@ -1,0 +1,50 @@
+:root {
+    --powder-blue: #B4C5E4;
+    --ivory: #FBFFF1;
+    --lapis-lazuli: #335B9B;
+    --poly-blue: #12479B;
+}
+body {
+    text-align: center;
+    background-color: var(--powder-blue);
+    font-family: 'Kay Pho Du', serif;
+}
+
+a {
+    color: var(--poly-blue);
+}
+
+a:hover {
+    color: var(--lapis-lazuli);
+}
+
+a:visited {
+    color: var(--lapis-lazuli);
+}
+
+.stitchifier {
+    background-color: var(--ivory);
+    margin: 1rem;
+    overflow: scroll;
+    border: 1px solid var(--poly-blue);
+    border-radius: 2rem;
+}
+
+.stitchifier form {
+    margin: 1rem;
+    margin-top: 2rem;
+}
+
+.stitchifier form label {
+    display: block;
+    margin: 1rem;
+}
+
+.stitchifier form label input {
+    margin-left: 1rem;
+}
+
+.stitchifier svg {
+    margin: 2rem;
+    border: 0.5px solid black;
+}
